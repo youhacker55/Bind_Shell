@@ -17,7 +17,9 @@ Stable Undetected Bind_Shell
 
 ![](/Screenshot/shell.PNG)
 
+# Detection
 
+![](/Screenshot/Detection.png)
 
 # How to  use
 
