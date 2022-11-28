@@ -75,8 +75,7 @@ Made By youhacker55
             else
             {
                 Console.WriteLine("NO args detected Example How To Use:Bind_shell.exe 0.0.0.0 4444 ");
-                // Print Error if server Detected
-                Console.WriteLine(args.Length);
+                
       
                 Console.ReadLine();
                 Environment.Exit(0);
