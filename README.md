@@ -19,7 +19,7 @@ Stable Undetected Bind_Shell
 
 
 
-# How to install + use
+# How to  use
 
 
 # Post Exploitation
