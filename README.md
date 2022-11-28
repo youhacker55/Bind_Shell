@@ -22,7 +22,12 @@ Stable Undetected Bind_Shell
 ![](/Screenshot/Detection.png)
 
 # How to  use
+```
+Download The repo or Compiled version As you like 
 
+Run bin_shell.exe <ip> <port> <Debug/NODebug>
+Now time to connect to our shell with Commend-Sender.py 127.0.0.1 5555
+```
 
 # Post Exploitation
   post exploitation modules will be added soon
