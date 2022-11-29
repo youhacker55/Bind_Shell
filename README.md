@@ -30,4 +30,4 @@ Now time to connect to our shell with Commend-Sender.py <ip> <port>
 ```
 
 # Post Exploitation
-  post exploitation modules will be added soon
+   Persistence your shell hiddenly
